@@ -1,6 +1,7 @@
 import telebot
 from telebot import types
 import openai
+import time
 
 
 GPT_KEY = "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"
@@ -18,6 +19,11 @@ def main():
         markup.add(btn1, btn2)
         bot.send_message(
             message.chat.id, text="Привет, я - чатбот, созданный на основе чата GPT.", reply_markup=markup)
+        
+        filew = open('logs.txt', 'w', encoding='utf-8')
+        filew.write(
+            f'{message.from_user.username} | {message.text} | {time.strftime("%Y-%m-%d %H:%M")}')
+        filew.close()
 
 
     @bot.message_handler(content_types=['text'])
@@ -37,6 +43,11 @@ def main():
             )
             bot.send_message(message.from_user.id,
                             getMessage.choices[0].message.content)
+            
+            filew = open('logs.txt', 'a', encoding='utf-8')
+            filew.write(
+                f'{message.from_user.username} | {message.text} | {time.strftime("%Y-%m-%d %H:%M")} \n')
+            filew.close()
 
         elif message.text == "Вернуться в главное меню":
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -45,6 +56,11 @@ def main():
             markup.add(btn1, btn2)
             bot.send_message(
                 message.chat.id, text="Вы вернулись в главное меню", reply_markup=markup)
+            
+            filew = open('logs.txt', 'a', encoding='utf-8')
+            filew.write(
+                f'{message.from_user.username} | {message.text} | {time.strftime("%Y-%m-%d %H:%M")} \n')
+            filew.close()
 
         elif message.text == "Нарисовать картинку 🖼️":
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -53,6 +69,12 @@ def main():
             markup.add(btn1, btn2)
             bot.send_message(
                 message.chat.id, text="Для создания изображения необходимо написать 'img-<ваш запрос>'", reply_markup=markup)
+            
+            filew = open('logs.txt', 'a', encoding='utf-8')
+            filew.write(
+                f'{message.from_user.username} | {message.text} | {time.strftime("%Y-%m-%d %H:%M")} \n')
+            filew.close()
+
 
         elif str(message.text).split('-')[0] == 'img':
             bot.send_message(message.from_user.id, "Обработка запроса..⌛️")
@@ -63,6 +85,11 @@ def main():
             )
             bot.delete_message(message.chat.id, message.message_id + 1)
             bot.send_photo(message.from_user.id, getImage.data[0].url)
+
+            filew = open('logs.txt', 'a', encoding='utf-8')
+            filew.write(
+                f'{message.from_user.username} | {message.text} | {time.strftime("%Y-%m-%d %H:%M")} \n')
+            filew.close()
 
         else:
             bot.send_message(message.from_user.id, "Обработка запроса..⌛️")
@@ -76,6 +103,11 @@ def main():
             bot.delete_message(message.chat.id, message.message_id + 1)
             bot.send_message(message.from_user.id,
                             getMessage.choices[0].message.content)
+            
+            filew = open('logs.txt', 'a', encoding='utf-8')
+            filew.write(
+                f'{message.from_user.username} | {message.text} | {time.strftime("%Y-%m-%d %H:%M")} \n')
+            filew.close()
 
 
     bot.polling(none_stop=True, interval=0)

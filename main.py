@@ -4,8 +4,8 @@ import openai
 import time
 
 
-GPT_KEY = "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"
-TG_KEY = "5993288105:AAGN6NhXCR4I28elPItSHCP2YsFRpQGM090"
+GPT_KEY = "KEY"
+TG_KEY = "KEY"
 
 bot = telebot.TeleBot(TG_KEY)
 openai.api_key = GPT_KEY
